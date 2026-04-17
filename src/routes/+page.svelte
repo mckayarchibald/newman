@@ -165,22 +165,23 @@
 	.page-container {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 2rem;
+		gap: 1.5rem;
 		max-width: 1400px;
 		margin: 0 auto;
-		padding: 2rem;
+		padding: 1.5rem;
 	}
 
 	.left-column {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto auto;
+		gap: 1.5rem;
 	}
 
 	.right-column {
 		display: flex;
 		flex-direction: column;
-		gap: 2rem;
+		gap: 1.5rem;
 		position: sticky;
 		top: 2rem;
 		align-self: start;

@@ -50,12 +50,13 @@
 
 <style>
 	.carrier-selection-container {
-		max-width: 600px;
-		margin: 2rem auto;
-		padding: 2rem;
+		max-width: none;
+		margin: 0;
+		padding: 1.5rem;
 		background: white;
 		border-radius: 8px;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		height: 100%;
 	}
 
 	h2 {

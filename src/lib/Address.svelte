@@ -33,6 +33,8 @@
 		address?: AddressData;
 	} = $props();
 
+	let isHovered = $state(false);
+
 	function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 		console.log('Address submitted:', address);
@@ -45,70 +47,81 @@
 	};
 </script>
 
-<div class="form-container">
+<div class="form-container" onmouseenter={() => isHovered = true} onmouseleave={() => isHovered = false}>
 	<h1>{addressType[type]}</h1>
-	<form onsubmit={handleSubmit}>
-		<div class="form-group">
-			<label for="street-address">Street 1</label>
-			<input
-				type="text"
-				id="street-address"
-				bind:value={address.streetAddress}
-				placeholder="123 Main St"
-				required
-			/>
+	{#if (type === 'origin' || type === 'destination') && !isHovered}
+		<div class="address-display">
+			<p>{address.streetAddress}</p>
+			{#if address.streetAddress2}
+				<p>{address.streetAddress2}</p>
+			{/if}
+			<p>{address.city}, {address.stateProvince} {address.zipCode}</p>
+			<p>{address.country}</p>
 		</div>
-
-		<div class="form-group">
-			<label for="street-address-2">Street 2</label>
-			<input
-				type="text"
-				id="street-address-2"
-				bind:value={address.streetAddress2}
-				placeholder="123 Main St"
-			/>
-		</div>
-
-		<div class="form-group">
-			<label for="city">City</label>
-			<input type="text" id="city" bind:value={address.city} placeholder="New York" required />
-		</div>
-
-		<div class="form-row">
+	{:else}
+		<form onsubmit={handleSubmit}>
 			<div class="form-group">
-				<label for="state">State/Province</label>
+				<label for="street-address">Street 1</label>
 				<input
 					type="text"
-					id="state"
-					bind:value={address.stateProvince}
-					placeholder="NY"
+					id="street-address"
+					bind:value={address.streetAddress}
+					placeholder="123 Main St"
 					required
 				/>
 			</div>
 
 			<div class="form-group">
-				<label for="zip-code">Postal Code</label>
+				<label for="street-address-2">Street 2</label>
 				<input
 					type="text"
-					id="zip-code"
-					bind:value={address.zipCode}
-					placeholder="10001"
+					id="street-address-2"
+					bind:value={address.streetAddress2}
+					placeholder="123 Main St"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="city">City</label>
+				<input type="text" id="city" bind:value={address.city} placeholder="New York" required />
+			</div>
+
+			<div class="form-row">
+				<div class="form-group">
+					<label for="state">State/Province</label>
+					<input
+						type="text"
+						id="state"
+						bind:value={address.stateProvince}
+						placeholder="NY"
+						required
+					/>
+				</div>
+
+				<div class="form-group">
+					<label for="zip-code">Postal Code</label>
+					<input
+						type="text"
+						id="zip-code"
+						bind:value={address.zipCode}
+						placeholder="10001"
+						required
+					/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="country">Country</label>
+				<input
+					type="text"
+					id="country"
+					bind:value={address.country}
+					placeholder="United States"
 					required
 				/>
 			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="country">Country</label>
-			<input
-				type="text"
-				id="country"
-				bind:value={address.country}
-				placeholder="United States"
-				required
-			/>
-		</div>
-	</form>
+		</form>
+	{/if}
 	{#if type === 'origin'}
 		<div class="checkbox-group">
 			<label for="is-default">Different return address</label>
@@ -119,12 +132,13 @@
 
 <style>
 	.form-container {
-		max-width: 600px;
-		margin: 2rem auto;
-		padding: 2rem;
+		max-width: none;
+		margin: 0;
+		padding: 1.5rem;
 		background: white;
 		border-radius: 8px;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		height: 100%;
 	}
 
 	h1 {
@@ -211,5 +225,19 @@
 	.checkbox-group input[type='checkbox'] {
 		width: auto;
 		cursor: pointer;
+	}
+
+	.address-display {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		padding: 1rem 0;
+		font-size: 1rem;
+		color: #333;
+	}
+
+	.address-display p {
+		margin: 0;
+		line-height: 1.4;
 	}
 </style>
